@@ -10,10 +10,11 @@ export const useSettingStore = defineStore('settingStore', {
             webLanguage: 'zh', // 语言
             fontSize: 'default', // 字号大小
             themeName: 'theme-default', // 主题
+            lightThemeName: 'theme-default', // 暗黑模式关闭后恢复的主题
             isDark: false, // 是否暗黑主题
             menuAnimation: 'rtl', // 菜单动画方向——仅mobile
             menuStyle: 'Light', // 菜单样式
-            menuWidth: '100%', // 菜单宽度（高度）
+            menuWidth: '25%', // 菜单宽度（高度）
             menuBg: '', // 菜单背景 new URL('../../assets/images/menu-bg1.png', import.meta.url).href
             showLabel: false, // 显示标签
             showLabelIcon: false, // 显示标签icon
@@ -58,36 +59,6 @@ export const useSettingStore = defineStore('settingStore', {
         getFontSize: (state) => {
             return state.fontSize;
         },
-        //返回文字字号大小
-        getTextFontSize: (state) => {
-            return state.fontSize == 'default' ? 'medium' : state.fontSize;
-        },
-        // 返回 较大号的字号大小
-        getMediumFontSize: (state) => {
-            switch (state.fontSize) {
-                case 'small':
-                    return 'medium';
-                case 'default':
-                    return 'large';
-                case 'large':
-                    return 'x-large';
-                default:
-                    return '';
-            }
-        },
-        // 返回 大号的字号大小
-        getMaxFontSize: (state) => {
-            switch (state.fontSize) {
-                case 'small':
-                    return 'large';
-                case 'default':
-                    return 'x-large';
-                case 'large':
-                    return 'xx-large';
-                default:
-                    return '';
-            }
-        },
         //根据字号大小获取分页高度
         getLineHeight: (state) => {
             return state.fontSize == 'small'
@@ -127,24 +98,6 @@ export const useSettingStore = defineStore('settingStore', {
                 : state.fontSize == 'large'
                 ? 180
                 : 160;
-        },
-        //根据字号获取筛选行3个按钮所占col（每个按钮2个汉字）
-        getThreeBtnSpan: (state) => {
-            return state.fontSize == 'small' ? 5 : state.fontSize == 'default' ? 6 : state.fontSize == 'large' ? 6 : 5;
-        },
-        //根据字号获取筛选行2个按钮所占col（每个按钮2个汉字）
-        getTwoBtnSpan: (state) => {
-            return state.fontSize == 'small' ? 3 : state.fontSize == 'default' ? 4 : state.fontSize == 'large' ? 4 : 4;
-        },
-        //根据字号获取列表区域最大高度需减去的offset
-        getHeightOffset: (state) => {
-            return state.fontSize == 'small'
-                ? 310
-                : state.fontSize == 'default'
-                ? 318
-                : state.fontSize == 'large'
-                ? 326
-                : 310;
         },
         // 根据字号 获取对应的icon宽度大小
         getLogoWidth: (state) => {
@@ -269,6 +222,54 @@ export const useSettingStore = defineStore('settingStore', {
         },
         getSettingWidth: (state) => {
             return state.settingWidth;
+        },
+        //返回文字字号大小
+        getTextFontSize: (state) => {
+            return state.fontSize == 'default' ? 'medium' : state.fontSize;
+        },
+        // 返回 较大号的字号大小
+        getMediumFontSize: (state) => {
+            switch (state.fontSize) {
+                case 'small':
+                    return 'medium';
+                case 'default':
+                    return 'large';
+                case 'large':
+                    return 'x-large';
+                default:
+                    return '';
+            }
+        },
+        // 返回 大号的字号大小
+        getMaxFontSize: (state) => {
+            switch (state.fontSize) {
+                case 'small':
+                    return 'large';
+                case 'default':
+                    return 'x-large';
+                case 'large':
+                    return 'xx-large';
+                default:
+                    return '';
+            }
+        },
+        //根据字号获取筛选行3个按钮所占col（每个按钮2个汉字）
+        getThreeBtnSpan: (state) => {
+            return state.fontSize == 'small' ? 5 : state.fontSize == 'default' ? 6 : state.fontSize == 'large' ? 6 : 5;
+        },
+        //根据字号获取筛选行2个按钮所占col（每个按钮2个汉字）
+        getTwoBtnSpan: (state) => {
+            return state.fontSize == 'small' ? 3 : state.fontSize == 'default' ? 4 : state.fontSize == 'large' ? 4 : 4;
+        },
+        //根据字号获取列表区域最大高度需减去的offset
+        getHeightOffset: (state) => {
+            return state.fontSize == 'small'
+                ? 310
+                : state.fontSize == 'default'
+                ? 318
+                : state.fontSize == 'large'
+                ? 326
+                : 310;
         }
     },
     actions: {
@@ -276,7 +277,7 @@ export const useSettingStore = defineStore('settingStore', {
             if (isMobile()) {
                 this.device = 'mobile';
                 this.layout = 'Y9Mobile';
-                this.settingWidth = '100%';
+                this.settingWidth = '68%';
             } else {
                 this.device = 'pc';
                 this.layout = this.pcLayout;
